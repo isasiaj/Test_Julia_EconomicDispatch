@@ -25,9 +25,12 @@ using HiGHS
 ## Input Data
 cost = [5  10  15
         5   0   0] # €/MWh
+
 Pₘₐₓ = [20  20  20 
         20   0   0] # Rated power of each generator, MW
+
 Demand = [50  10] # MW
+
 P_max_line = [0  5 
               5  0] # Max power per line
 
@@ -51,7 +54,7 @@ model = Model(HiGHS.Optimizer)
 #Line power flow
 for ii in 1:N_nodes, jj in 1:N_nodes 
     if jj != ii
-        @constraint(model, line_power, - P_max_line[ii, jj] <= sum(P[ii, :]) - Demand[ii] <= P_max_line[ii, jj]) # Max power in line
+        @constraint(model, - P_max_line[ii, jj] <= sum(P[ii, :]) - Demand[ii] <= P_max_line[ii, jj]) # Max power in line
     end
 end
 
@@ -94,6 +97,3 @@ println()
 
 λₑₙₑᵣ = dual(power_balance) # Marginal price of energy, €/MWh
 println("Price of energy: ", λₑₙₑᵣ, " €/MWh")
-
-P_line = dual(line_power) # Marginal price of energy, €/MWh
-println("Power flow in line: ", value(P_line), "MWh")
