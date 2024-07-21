@@ -57,7 +57,7 @@ set_silent(model)
 =#
 for ii in 1:N_nodes, jj in 1:N_nodes 
     if jj != ii
-        @constraint(model, P_line[ii, jj] == sum(P[ii, :]) - Demand[ii]) # Max power in line
+        @constraint(model, Pₗᵢₙₑ[ii, jj] == sum(P[ii, :]) - Demand[ii]) # Max power in line
     end
 end
 # Total generated power
