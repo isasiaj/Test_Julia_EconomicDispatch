@@ -72,9 +72,6 @@ set_silent(model)
 
 
 #       ***** Define the constraints *****
-
-# Total generated power
-#@constraint(model, sum(P) == sum(Demand))  # Total power output equals demand / Por que al descomentar esta linea de jode el precio marginal
 @constraint(model, sum(Pₗᵢₙₑ) == 0)
 # Local power balance
 power_balance = []
